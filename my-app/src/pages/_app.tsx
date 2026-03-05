@@ -1,13 +1,11 @@
-import AppsShell from '@/components/layouts/Apshell';
-import Footer from '@/components/layouts/footer';
+import AppShell from '@/components/layouts/Apshell';
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 
 export default function App({ Component, pageProps }: AppProps) {
-  return (
-    <AppsShell>
-      <Component {...pageProps} />
-      <Footer />
-    </AppsShell>
-  );
+return (
+<AppShell>
+<Component {...pageProps} />
+</AppShell>
+);
 };
