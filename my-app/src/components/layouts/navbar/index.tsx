@@ -1,10 +1,10 @@
-import styles from './navbar.module.css';
+import styles from './navbar.module.css'; // Menggunakan alias styles
 const Navbar = () => {
 return (
 <div className={styles.navbar}>
-
-<div>
-<h1>Navbar Component</h1>
+{/* Menggunakan class global .big dari globals.css */}
+<div className="big">
+Navbar
 </div>
 </div>
 );
