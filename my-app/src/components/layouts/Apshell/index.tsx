@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import Navbar from "../navbar";
 // Menyimpan daftar rute/path yang tidak akan menampilkan Navbar
-const disableNavbar = ["/auth/login", "/auth/register"];
+const disableNavbar = ['/auth/login', '/auth/register','/404'];
 type AppShellProps = {
 children: React.ReactNode;
 };

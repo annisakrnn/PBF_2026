@@ -1,13 +1,15 @@
-import { Html, Head, Main, NextScript } from 'next/document'
-
-export default function Document() {
-  return (
-    <Html lang="en">
-      <Head />
-      <body>
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-  )
-}
+import styles from "@/styles/404.module.scss";
+const Custom404 = () => {
+return (
+<div className={styles.error}>
+<img
+src="/notfound.png"
+alt="404"
+className={styles.error__image}
+/>
+<h1>404 - Halaman Tidak Ditemukan</h1>
+<p>Maaf, halaman yang Anda cari tidak ada.</p>
+</div>
+);
+};
+export default Custom404;
