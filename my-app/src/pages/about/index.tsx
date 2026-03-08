@@ -1,11 +1,9 @@
-import { Inter } from 'next/font/google';
-
-const inter = Inter({ subsets: ['latin'] })
-
-export default function Home() {
-  return (
-    <div className={inter.className}>
-      <h1>ini halaman about</h1>
-    </div>
-  );
+import AboutView from "@/views/about";
+export default function AboutPage() {
+return (
+<>
+<title>About | Annisa Kurniawati</title>
+<AboutView />
+</>
+);
 }
