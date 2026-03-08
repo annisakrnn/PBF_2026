@@ -1,8 +1,18 @@
+.container {
+  background: #f8fafc;
+  min-height: 100vh;
+  padding-bottom: 50px;
+}
+
+.box {
+  max-width: 1100px;
+  margin: auto;
+}
+
 .hero {
-  padding: 80px 20px;
+  padding: 100px 20px 140px; /* Padding bawah lebih besar untuk offset MainSection */
   text-align: center;
   background: linear-gradient(135deg, #f0f7ff 0%, #bae6fd 100%);
-  color: #1e3a8a; 
 }
 
 .heroContent {
@@ -10,29 +20,18 @@
   margin: auto;
 }
 
-.badge {
-  display: inline-block;
-  background: rgba(59, 130, 246, 0.1);
-  color: #2563eb;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 15px;
-  border: 1px solid rgba(59, 130, 246, 0.2);
-}
-
 .heroTitle {
-  font-size: 40px;
-  font-weight: 800; 
-  margin-bottom: 15px;
-  color: #1e40af; 
+  font-size: 48px;
+  font-weight: 900;
+  color: #1e293b;
+  line-height: 1.2;
+  margin: 15px 0;
 }
 
 .heroDescription {
   font-size: 18px;
-  margin-bottom: 25px;
-  color: #334155; 
+  color: #64748b;
+  margin-bottom: 30px;
 }
 
 .buttonGroup {
@@ -41,34 +40,85 @@
   gap: 12px;
 }
 
-.primaryButton {
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
   background: #2563eb;
   color: white;
-  padding: 12px 22px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
-  transition: all 0.3s ease;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.primaryButton:hover {
-  background: #1d4ed8;
-  transform: translateY(-2px);
+.primaryButton {
+  padding: 12px 24px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
+
+.primaryButton:hover { transform: translateY(-2px); }
 
 .secondaryButton {
+  padding: 12px 24px;
   background: white;
   color: #2563eb;
   border: 2px solid #2563eb;
-  padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 12px;
+  font-weight: bold;
   cursor: pointer;
-  font-weight: 600;
+}
+
+.title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 30px;
+  color: #1e293b;
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: white;
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+.sectionProduk {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+  cursor: pointer; /* Memberi indikasi bahwa produk bisa diklik/dipilih */
+  border: 2px solid transparent;
   transition: all 0.3s ease;
 }
 
-.secondaryButton:hover {
-  background: #eff6ff;
+.card:hover {
+  border-color: #2563eb;
+  background-color: #f0f7ff;
+  transform: scale(1.02);
 }

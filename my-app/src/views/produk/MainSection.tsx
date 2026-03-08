@@ -9,20 +9,7 @@ const MainSection = ({ productId, onLogout }: MainSectionProps) => {
       <div className="flex items-center gap-2 mb-4">
         <div className="h-2 w-8 bg-blue-500 rounded-full"></div>
       </div>
-      
-      
-      <div className="bg-slate-50 p-6 rounded-2xl border-l-8 border-blue-500 mb-8">
-        {productId ? (
-          <div>
-            <p className="text-slate-400 uppercase text-xs font-bold">Identifikasi Produk</p>
-            <p className="text-3xl font-mono font-black text-blue-600 mt-1">{productId}</p>
-          </div>
-        ) : (
-          <p className="text-slate-500 italic text-center py-4">
-            Silahkan pilih produk melalui daftar atau masukkan ID pada URL.
-          </p>
-        )}
-      </div>
+
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
