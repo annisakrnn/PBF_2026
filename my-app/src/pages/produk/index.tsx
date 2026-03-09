@@ -1,26 +1,20 @@
 import TampilanProduk from "@/views/produk";
-import { useState } from "react";
 import useSWR from "swr";
-import fetcher from "../utils/swr/fetcher";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const Kategori = () => {
-  const [products, setProducts] = useState([]);
   const { data, error, isLoading } = useSWR("/api/produk", fetcher);
-  // useEffect(() => {
-  //   fetch("/api/produk")
-  //     .then((response) => response.json())
-  //     .then((responsedata) => {
-  //       // Mengambil data dari properti 'data' sesuai struktur API
-  //       setProducts(responsedata.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching produk:", error);
-  //     });
-  // }, []);
+
+  const products = data?.data || [];
+
+  if (error) {
+    console.error("Terjadi kesalahan saat mengambil data:", error);
+  }
 
   return (
     <div>
-      <TampilanProduk products={isLoading ? [] : data?.data || []} />
+      <TampilanProduk isLoading={isLoading} products={products} />
     </div>
   );
 };
