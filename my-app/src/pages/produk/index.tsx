@@ -1,53 +1,28 @@
-import HeroSection from "@/views/produk/HeroSection";
-import Kategori from "@/views/produk/index";
-import MainSection from "@/views/produk/MainSection";
-import styles from "@/views/produk/produk.module.css";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import TampilanProduk from "@/views/produk";
+import { useState } from "react";
+import useSWR from "swr";
+import fetcher from "../utils/swr/fetcher";
 
-const TampilanProduk = () => {
-  const router = useRouter();
-  const { id } = router.query;
-
-  // Proteksi Halaman
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      router.push("/auth/login");
-    }
-  }, [router]);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    router.push("/auth/login");
-  };
+const Kategori = () => {
+  const [products, setProducts] = useState([]);
+  const { data, error, isLoading } = useSWR("/api/produk", fetcher);
+  // useEffect(() => {
+  //   fetch("/api/produk")
+  //     .then((response) => response.json())
+  //     .then((responsedata) => {
+  //       // Mengambil data dari properti 'data' sesuai struktur API
+  //       setProducts(responsedata.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching produk:", error);
+  //     });
+  // }, []);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.box}>
-        {/* 1. Bagian Banner Atas */}
-        <HeroSection />
-
-        {/* 2. Label Instruksi & Katalog */}
-        <section className="px-5 py-10">
-          <div className="flex flex-col items-center mb-8">
-            <h2 className="text-2xl font-black text-slate-800 uppercase tracking-widest">
-              Katalog Produk
-            </h2>
-          </div>
-
-          {/* DAFTAR PRODUK (Kategori) */}
-          <Kategori />
-
-          {/* Jarak antara List dan Detail */}
-          <div className="my-12"></div>
-
-          {/* 3. Detail Produk Terpilih & Logout (Diletakkan di bawah list) */}
-          <MainSection productId={id} onLogout={handleLogout} />
-        </section>
-      </div>
+    <div>
+      <TampilanProduk products={isLoading ? [] : data?.data || []} />
     </div>
   );
 };
 
-export default TampilanProduk;
+export default Kategori;
