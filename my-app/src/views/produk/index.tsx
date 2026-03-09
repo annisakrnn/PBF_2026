@@ -5,7 +5,7 @@ type ProductType = {
   name: string;
   price: number;
   image: string;
-  category: string;
+  kategori: string;
 };
 
 const TampilanProduk = ({
@@ -71,7 +71,7 @@ const TampilanProduk = ({
                 <p
                   className={styles["produk__content__item__category"]}
                 >
-                  {product.category}
+                  {product.kategori}
                 </p>
 
                 <h4
