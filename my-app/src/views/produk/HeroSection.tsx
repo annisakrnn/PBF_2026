@@ -1,4 +1,4 @@
-import styles from "./produk.module.css";
+import styles from "./produk.module.scss";
 
 const HeroSection = () => {
   return (

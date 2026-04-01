@@ -1,6 +1,6 @@
 import HeroSection from "@/views/produk/HeroSection";
 import MainSection from "@/views/produk/MainSection";
-import styles from "@/views/produk/produk.module.css";
+import styles from "@/views/produk/produk.module.scss";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
