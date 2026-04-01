@@ -1,26 +1,23 @@
 import TampilanProduk from "@/views/produk/index";
 import { ProductType } from "../../types/Product.type";
-
-const HalamanProdukStatic = (props: { products: ProductType[] }) => {
-  const { products } = props;
-
-  return (
-    <div>
-        <h1>Halaman Produk Static</h1>
-        {/* <TampilanProduk products={products} /> */}
-        <TampilanProduk products={products} isLoading={false} />
-    </div>
-    );
+const halamanProdukStatic = (props: { products: ProductType[] }) => {
+const { products } = props;
+return (
+<div>
+<h1>Halaman Produk Static</h1>
+<TampilanProduk products={products} />
+</div>
+);
 };
-
-export default HalamanProdukStatic;
-
+export default halamanProdukStatic;
 export async function getStaticProps() {
-  const res = await fetch("http://localhost:3001/api/produk");
-  const response: {data: ProductType[]} = await res.json();
-  return{
-    props: {
-        products: response.data,
-    }
+const res = await fetch('http://127.0.0.1:3000/api/produk');
+// const response: ProductType[] = await res.json();
+const response: { data: ProductType[] } = await res.json();
+// console.log("Data produk yang diambil dari API:", response);
+return {
+props: {
+products: response.data,
 }
-  }
+}
+}

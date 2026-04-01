@@ -14,7 +14,7 @@ const Kategori = () => {
 
   return (
     <div>
-      <TampilanProduk isLoading={isLoading} products={products} />
+      <TampilanProduk products={products} />
     </div>
   );
 };
