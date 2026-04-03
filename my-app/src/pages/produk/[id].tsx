@@ -1,49 +1,67 @@
 // pages/produk/[id].tsx
-import fetcher from "@/utils/swr/fetcher";
+import { ProductType } from "@/types/Product.type"; // ✅ WAJIB
 import DetailProduk from "@/views/DetailProduct";
-import { GetServerSideProps } from "next";
-import { useRouter } from "next/router";
-import useSWR from "swr";
 
-const HalamanProduk = () => {
-  const { query } = useRouter();
+const HalamanProduk = ({ product }: { product: ProductType }) => {
+  // Digunakan jika ingin menggunakan client-side rendering (SWR)
+  // const { query } = useRouter();
+  // const { data, error } = useSWR(
+  //   query.id ? `/api/produk/${query.id}` : null,
+  //   fetcher
+  // );
 
-  const { data, error, isLoading } = useSWR(
-    query.id ? `/api/products/${query.id}` : null,
-    fetcher
+  return (
+    <div>
+      <DetailProduk products={product} />
+    </div>
   );
-
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading product</p>;
-  if (!data) return <p>Product not found</p>;
-
-  return <DetailProduk products={data.data} />;
 };
 
 export default HalamanProduk;
 
-// Fungsi Server-Side Rendering (SSR)
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  // Mengambil ID/Slug produk dari parameter URL
-  const id = params?.produk;
+// --- STRATEGI STATIC SITE GENERATION (SSG) ---
+export async function getStaticPaths() {
+  const res = await fetch("http://localhost:3001/api/produk");
+  const response = await res.json();
 
-  try {
-    const res = await fetch(`http://localhost:3001/api/produk/${id}`);
-    const response = await res.json();
+  // Menggunakan 'id' sesuai dengan nama file [id].tsx
+  const paths = response.data.map((product: ProductType) => ({
+    params: { id: product.id.toString() },
+  }));
 
-    // Pastikan struktur data sesuai dengan yang dikirim oleh API Anda
-    return {
-      props: {
-        product: response.data || null,
-      },
-    };
-  } catch (error) {
-    console.error("Gagal mengambil data produk:", error);
+  return {
+    paths,
+    fallback: false, // atau 'blocking'
+  };
+}
 
-    return {
-      props: {
-        product: null,
-      },
-    };
-  }
-};
+export async function getStaticProps({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const res = await fetch(`http://localhost:3001/api/produk/${params.id}`);
+  const response = await res.json();
+
+  return {
+    props: {
+      product: response.data,
+    },
+
+    revalidate: 10,
+  };
+}
+
+// --- ALTERNATIF: SERVER SIDE RENDERING (SSR) ---
+/*
+export async function getServerSideProps({ params }: { params: { id: string } }) {
+  const res = await fetch(`http://localhost:3000/api/produk/${params.id}`);
+  const response = await res.json();
+
+  return {
+    props: {
+      product: response.data,
+    },
+  };
+}
+*/
