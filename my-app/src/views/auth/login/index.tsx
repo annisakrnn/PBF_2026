@@ -7,13 +7,13 @@ const TampilanLogin = () => {
   const [loading, setLoading] = useState(false);
 
   const handleLogin = () => {
-    setLoading(true);
-    setTimeout(() => {
-      localStorage.setItem('token', 'ini-adalah-token-dummy-123');
-      setLoading(false);
-      push('/produk');
-    }, 1000);
-  };
+  setLoading(true);
+  setTimeout(() => {
+    document.cookie = "isLogin=true; path=/"; 
+    setLoading(false);
+    push("/produk");
+  }, 1000);
+};
 
   return (
     <div className="min-h-screen bg-blue-50 flex items-center justify-center p-4">
