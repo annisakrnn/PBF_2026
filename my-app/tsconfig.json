@@ -22,6 +22,7 @@
       ]
     },
     "target": "ES2017",
+    "moduleResolution": "bundler"
   },
   "include": [
     "next-env.d.ts",
@@ -30,7 +31,5 @@
     "src/pages/shop/[[...slug]].js",
     "src/pages/shop/[[...slug]].js"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": []
 }
