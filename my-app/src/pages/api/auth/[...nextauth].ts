@@ -15,43 +15,38 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        // Logika verifikasi user
         const user = {
           id: "1",
           fullname: credentials?.fullname,
           email: credentials?.email,
-          // Jangan kirim password ke dalam session/token demi keamanan
         };
 
         if (user.email && user.fullname) {
           return user;
         }
-        
+
         return null;
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      // Jika login berhasil, data user dipindah ke token
-      if (user) {
+    async jwt({ token, account, user }) {
+      // Simpan data dari objek 'user' ke dalam 'token' saat pertama kali login
+      if (account?.provider === "credentials" && user) {
         token.email = user.email;
+        // Gunakan type casting (as any) jika fullname belum terdefinisi di type bawaan
         token.fullname = (user as any).fullname;
       }
       return token;
     },
     async session({ session, token }) {
-      // Memindahkan data dari token ke session agar bisa diakses di frontend (useSession)
+      // Pindahkan data dari 'token' ke dalam objek 'session' agar bisa diakses di frontend
       if (session.user) {
         session.user.email = token.email;
         (session.user as any).fullname = token.fullname;
       }
       return session;
     },
-  },
-  // Menambahkan halaman kustom jika Anda memilikinya (opsional)
-  pages: {
-    signIn: "/auth/login", // Pastikan path ini sesuai jika pakai custom login
   },
 };
 
