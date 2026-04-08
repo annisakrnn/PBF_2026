@@ -6,7 +6,6 @@ export function mainMiddleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-// Bungkus mainMiddleware dengan withAuth
 export default withAuth(mainMiddleware, ["/profile", "/produk", "/about"]);
 
 export const config = {
