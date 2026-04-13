@@ -1,6 +1,13 @@
-'use server';  
-
-import { collection, doc, getDoc, getDocs, getFirestore } from "firebase/firestore";
+import {
+    addDoc,
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    getFirestore,
+    query,
+    where
+} from "firebase/firestore";
 import app from "./firebase";
 
 const db = getFirestore(app);
@@ -15,11 +22,51 @@ export async function retrieveProducts(collectionName: string) {
 }
 
 export async function retrieveDataByID(collectionName: string, id: string) {
-    const docRef = doc(db, collectionName, id);   // lebih aman
-    const snapshot = await getDoc(docRef);
-    
-    if (!snapshot.exists()) {
-    }
-    
-    return snapshot.data();
+    const snapshot = await getDoc(doc(db, collectionName, id));
+    const data = snapshot.data();
+    return data;
+}
+
+export async function signUp(
+  userData: {
+    email: string;
+    fullname: string;
+    password: string;
+    role?: string;
+  },
+  callback: Function
+) {
+  const q = query(
+    collection(db, "users"),
+    where("email", "==", userData.email)
+  );
+
+  const querySnapshot = await getDocs(q);
+
+  const data = querySnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  if (data.length > 0) {
+    callback({
+      status: "error",
+      message: "User already exists",
+    });
+  } else {
+    const newUser = {
+      email: userData.email,
+      fullname: userData.fullname,
+      password: userData.password,
+      role: "member", 
+      createdAt: new Date(),
+    };
+
+    await addDoc(collection(db, "users"), newUser);
+
+    callback({
+      status: "success",
+      message: "User registered successfully",
+    });
+  }
 }

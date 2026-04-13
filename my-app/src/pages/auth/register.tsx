@@ -1,7 +1,7 @@
-import TampilanRegister from "@/views/auth/register";
+import TampilanRegister from "@/views/register/index";
 
-const HalamanRegister = () => {
+const halamanRegister = () => {
   return <TampilanRegister />;
 };
 
-export default HalamanRegister;
+export default halamanRegister;
