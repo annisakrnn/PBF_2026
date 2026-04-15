@@ -28,6 +28,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "types/**/*.d.ts",
     "src/pages/shop/[[...slug]].js",
     "src/pages/shop/[[...slug]].js"
   ],

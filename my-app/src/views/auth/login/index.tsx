@@ -1,80 +1,130 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { signIn } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import style from './login.module.scss';
 
 const TampilanLogin = () => {
-  const { push } = useRouter();
-  const [loading, setLoading] = useState(false);
+const [isLoading, setIsLoading] = useState(false);
+const { push, query } = useRouter();
+const callbackUrl: any = query.callbackUrl as string || "/";
+const [error, setError] = useState("");
+const handleSubmit = async (event: any) => {
+event.preventDefault();
+setIsLoading(true);
+setError("");
 
-  const handleLogin = () => {
-  setLoading(true);
-  setTimeout(() => {
-    document.cookie = "isLogin=true; path=/"; 
-    setLoading(false);
-    push("/produk");
-  }, 1000);
+// const form = event.currentTarget;
+// const formData = new FormData(event.currentTarget);
+// const email = formData.get("email") as string;
+// const fullname = formData.get("Fullname") as string;
+// const password = formData.get("Password") as string;
+// if (!email) {
+//     setError("Email wajib diisi");
+//     return;
+//   }
+
+//   if (password.length < 6) {
+//     setError("Password minimal 6 karakter");
+//     return;
+//   }
+
+// const response = await fetch("/api/register", {
+// method: "POST",
+// headers: {
+// "Content-Type": "application/json",
+// },
+// body: JSON.stringify({ email, fullname, password }),
+// });
+// if (response.status === 200) {
+// form.reset();
+// setIsLoading(false);
+// push("/auth/login");
+// } else {
+// setIsLoading(false);
+// // Line 34: Perubahan pesan error menjadi lebih spesifik untuk email
+// setError(
+// response.status === 400 ? "Email already exists" : "An error occurred"
+// );
+// }
+// };
+try {
+  const res = await signIn("credentials", {
+    redirect: false,
+    email: event.target.email.value,
+    password: event.target.password.value,
+    callbackUrl,
+  });
+  if (!res?.error) {
+  // ambil session
+  const session = await fetch("/api/auth/session").then(res => res.json());
+
+  setIsLoading(false);
+
+  if (session.user.role === "admin") {
+    push("/admin");
+  } else {
+    push("/");
+  }
+}else{
+    setIsLoading(false);
+    setError(res?.error || "Login failed");
+  }
+} catch (error) {
+  setIsLoading(false);
+  setError("wrong email or password");
+}
 };
 
-  return (
-    <div className="min-h-screen bg-blue-50 flex items-center justify-center p-4">
-    
-      <div className="bg-white p-8 rounded-2xl shadow-xl shadow-blue-100 w-full max-w-md border border-blue-100">
-        
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-extrabold text-blue-800">Selamat Datang</h1>
-          <p className="text-blue-400 mt-2">Silakan login ke akun Anda</p>
+    return (
+        <div className={style.login}>
+            {error && <p className={style.login__error}>{error}</p>}
+            <h1 className={style.login__title}>Halaman Login</h1>
+            <div className={style.login__form}>
+            <form onSubmit ={handleSubmit}>
+            
+            <div className={style.login__form__item}>
+                <label 
+                    htmlFor="email"
+                    className={style.login__form__item__label}
+                >
+                    Email
+                </label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email"
+                    placeholder="Email"
+                    className={style.login__form__item__input} 
+                />    
+            </div>
+            <div className={style.login__form__item}>
+                <label 
+                    htmlFor="Password"
+                    className={style.login__form__item__label}
+                >
+                    Password
+                </label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password"
+                    placeholder="Password"
+                    className={style.login__form__item__input} 
+                />  
+            </div>
+            <button type="submit" className={style.login__form__item__button} disabled={isLoading}>
+                {isLoading ? "Loading..." : "Login"}
+            </button>
+            </form>
+            <br />
+            <p className={style.login__form__item__text}>
+                Tidak punya akun? <Link href="/auth/register">Ke Halaman Register</Link>
+            </p>
         </div>
-        
-        <div className="flex flex-col gap-4 mb-6">
-          <div className="group">
-            <label className="text-sm font-semibold text-blue-700 ml-1">Username</label>
-            <input 
-              type="text" 
-              placeholder="Masukkan username" 
-              className="w-full mt-1 border-2 border-blue-100 p-3 rounded-xl focus:outline-none focus:border-blue-500 transition-all bg-blue-50/30"
-            />
-          </div>
-          
-          <div className="group">
-            <label className="text-sm font-semibold text-blue-700 ml-1">Password</label>
-            <input 
-              type="password" 
-              placeholder="••••••••" 
-              className="w-full mt-1 border-2 border-blue-100 p-3 rounded-xl focus:outline-none focus:border-blue-500 transition-all bg-blue-50/30"
-            />
-          </div>
-        </div>
-
-        <button 
-          onClick={handleLogin}
-          disabled={loading}
-          className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 active:scale-[0.98] transition-all disabled:bg-blue-300 shadow-lg shadow-blue-200"
-        >
-          {loading ? (
-            <span className="flex items-center justify-center gap-2">
-              <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Memproses...
-            </span>
-          ) : "Masuk Sekarang"}
-        </button> 
-
-        <div className="mt-8 pt-6 border-t border-blue-50 text-center">
-          <p className="text-blue-400 text-sm mb-2">
-            Belum memiliki akun?
-          </p>
-          <Link 
-            href="/auth/register" 
-            className="text-blue-600 font-bold hover:text-blue-800 transition-colors"
-          >
-            Daftar Akun Baru
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
+         </div>
+    );
 };
+
 
 export default TampilanLogin;
