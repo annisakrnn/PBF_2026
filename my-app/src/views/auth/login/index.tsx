@@ -115,6 +115,14 @@ try {
             </div>
             <button type="submit" className={style.login__form__item__button} disabled={isLoading}>
                 {isLoading ? "Loading..." : "Login"}
+            </button> {""}
+            <br /> <br />
+            <button 
+                onClick={() => signIn("google", {callbackUrl, redirect: false})}
+                className={style.login__form__item__button}
+                disabled={isLoading}
+            >
+                {isLoading ? "Loading..." : "Sign In with Google"}
             </button>
             </form>
             <br />

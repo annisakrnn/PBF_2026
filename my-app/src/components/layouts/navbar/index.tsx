@@ -18,7 +18,14 @@ const Navbar = () => {
           <>
             <div className={styles.navbar__user}>
               {/* Optional chaining agar tidak crash jika data belum load */}
-              Welcome, {(session?.user as any)?.fullname || session?.user?.name}
+              Welcome. {session.user?.fullname}
+              {session?.user?.image && (
+                <img
+                  src={session.user.image}
+                  alt={session.user.fullname}
+                  className={styles.navbar__user__image}
+                />
+              )}
             </div>
             <button
               className={`${styles.navbar__button} ${styles["navbar__button--danger"]}`}

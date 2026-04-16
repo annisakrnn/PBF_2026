@@ -18,7 +18,7 @@ const HalamanProdukServer = (props: { products: ProductType[] }) => {
 export default HalamanProdukServer;
 
 export async function getServerSideProps() {
-  const res = await fetch("http://localhost:3001/api/produk");
+  const res = await fetch("http://localhost:3000/api/produk");
   const respone = await res.json();
 
   return {
