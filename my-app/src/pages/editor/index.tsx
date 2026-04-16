@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import styles from "./editor.module.scss"; // ✅ import
+import styles from "./editor.module.scss";
 
 export default function EditorPage() {
   const { data: session, status } = useSession();
@@ -13,7 +13,7 @@ export default function EditorPage() {
     if (status === "loading") return;
 
     if (!session) {
-      router.push("/login");
+      router.push("/auth/login");
       return;
     }
 
