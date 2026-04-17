@@ -61,7 +61,7 @@ export const authOptions: NextAuthOptions = {
       if (account?.provider === "credentials" && user) {
         token.email = user.email;
         token.fullname = user.fullname;
-        token.role = user.role;
+        token.role = user.role?.trim();
       }
       if (account?.provider === "google") {
         const data = {
@@ -79,7 +79,7 @@ export const authOptions: NextAuthOptions = {
         token.email = data.email;
         token.image = data.image;
         token.type = data.type;
-        token.role = response.data.role;
+        token.role = response.data.role?.trim(); 
       }
         });
       }
@@ -100,7 +100,7 @@ export const authOptions: NextAuthOptions = {
       }
 
       if (token.role) {
-        session.user.role = token.role;
+        session.user.role = token.role?.trim();
       }
       if (token.type) {
         session.user.type = token.type;
