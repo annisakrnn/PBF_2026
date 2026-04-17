@@ -1,7 +1,9 @@
 "use client";
 
 import { signIn, signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 import styles from './navbar.module.css';
+
 
 const Navbar = () => {
   // Menggunakan destructuring yang lebih bersih
@@ -20,10 +22,17 @@ const Navbar = () => {
               {/* Optional chaining agar tidak crash jika data belum load */}
               Welcome. {session.user?.fullname}
               {session?.user?.image && (
-                <img
-                  src={session.user.image}
-                  alt={session.user.fullname}
-                  className={styles.navbar__user__image}
+                // <img
+                //   src={session.user.image}
+                //   alt={session.user.fullname}
+                //   className={styles.navbar__user__image}
+                // />
+                <Image
+                  src={session?.user?.image || "/default-avatar.png"}
+                  alt="avatar"
+                  width={40}
+                  height={40}
+                  className="rounded-full object-cover"
                 />
               )}
             </div>

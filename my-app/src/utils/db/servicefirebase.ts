@@ -1,14 +1,14 @@
 import bcrypt from "bcrypt"; // 🔥 tambahkan ini
 import {
-    addDoc,
-    collection,
-    doc,
-    getDoc,
-    getDocs,
-    getFirestore,
-    query,
-    updateDoc,
-    where
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  query,
+  updateDoc,
+  where
 } from "firebase/firestore";
 import app from "./firebase";
 
