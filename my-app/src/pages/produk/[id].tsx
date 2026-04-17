@@ -21,7 +21,7 @@ export default HalamanProduk;
 
 // --- STRATEGI STATIC SITE GENERATION (SSG) ---
 export async function getStaticPaths() {
-  const res = await fetch("http://localhost:3000/api/produk");
+  const res = await fetch("http://localhost:3001/api/produk");
   const response = await res.json();
 
   // Menggunakan 'id' sesuai dengan nama file [id].tsx
