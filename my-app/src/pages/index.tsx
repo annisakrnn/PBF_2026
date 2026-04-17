@@ -1,7 +1,10 @@
 import { Inter } from 'next/font/google';
 import Head from 'next/head';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+});
 
 export default function Home() {
   return (

@@ -1,6 +1,7 @@
 "use client";
 
 import { signIn, signOut, useSession } from "next-auth/react";
+import Script from 'next/dist/client/script';
 import Image from "next/image";
 import styles from './navbar.module.css';
 
@@ -10,11 +11,15 @@ const Navbar = () => {
   const { data: session, status } = useSession();
 
   return (
+    
     <nav className={styles.navbar}>
-      <div className={styles.navbar__brand}>
+      {/* <div className={styles.navbar__brand}>
         MyApp
-      </div>
-
+      </div> */}
+      <div className={styles.navbar__brand} id="title"></div>
+      <Script id="title-script" strategy="lazyOnload">
+        {'document.getElementById("title").textContent = "MyApp";'}
+      </Script>
       <div className={styles.navbar__right}>
         {status === "authenticated" ? (
           <>
@@ -30,8 +35,8 @@ const Navbar = () => {
                 <Image
                   src={session?.user?.image || "/default-avatar.png"}
                   alt="avatar"
-                  width={40}
-                  height={40}
+                  width={50}
+                  height={50}
                   className="rounded-full object-cover"
                 />
               )}

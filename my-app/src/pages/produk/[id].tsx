@@ -53,7 +53,7 @@ export async function getStaticProps({
 }
 
 // --- ALTERNATIF: SERVER SIDE RENDERING (SSR) ---
-/*
+/* 
 export async function getServerSideProps({ params }: { params: { id: string } }) {
   const res = await fetch(`http://localhost:3000/api/produk/${params.id}`);
   const response = await res.json();

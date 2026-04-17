@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./about.module.css";
 
 const AboutView = () => {
@@ -27,9 +28,11 @@ const AboutView = () => {
         </div>
 
         <div className={styles.illustrationWrapper}>
-          <img
+          <Image
             src="/about.png"
             alt="Ilustrasi Profil Mahasiswa"
+            width={300}
+            height={300}
             className={styles.image}
           />
         </div>
