@@ -19,38 +19,6 @@ const HalamanProduk = ({ product }: { product: ProductType }) => {
 
 export default HalamanProduk;
 
-// --- STRATEGI STATIC SITE GENERATION (SSG) ---
-// export async function getStaticPaths() {
-//   const res = await fetch("http://localhost:3001/api/produk");
-//   const response = await res.json();
-
-//   // Menggunakan 'id' sesuai dengan nama file [id].tsx
-//   const paths = response.data.map((product: ProductType) => ({
-//     params: { id: product.id.toString() },
-//   }));
-
-//   return {
-//     paths,
-//     fallback: false, // atau 'blocking'
-//   };
-// }
-
-// export async function getStaticProps({
-//   params,
-// }: {
-//   params: { id: string };
-// }) {
-//   const res = await fetch(`http://localhost:3001/api/produk/${params.id}`);
-//   const response = await res.json();
-
-//   return {
-//     props: {
-//       product: response.data,
-//     },
-
-//     revalidate: 10,
-//   };
-// }
 
 // --- ALTERNATIF: SERVER SIDE RENDERING (SSR) ---
 
