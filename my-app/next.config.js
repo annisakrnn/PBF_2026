@@ -4,11 +4,17 @@ const { hostname } = require('node:os');
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: [
-      "avatars.githubusercontent.com", // GitHub avatar
-      "firebasestorage.googleapis.com", // Firebase Storage
-    ],
     remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "firebasestorage.googleapis.com",
+        pathname: "/**",
+      },
       {
         protocol: "https",
         hostname: "assets.adidas.com",
@@ -18,7 +24,7 @@ const nextConfig = {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
         pathname: "/**",
-      }
+      },
     ],
   },
 };

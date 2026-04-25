@@ -35,11 +35,26 @@ export default HalamanProduk;
 //   };
 // }
 
-export async function getStaticProps({
-  params,
-}: {
-  params: { id: string };
-}) {
+// export async function getStaticProps({
+//   params,
+// }: {
+//   params: { id: string };
+// }) {
+//   const res = await fetch(`http://localhost:3001/api/produk/${params.id}`);
+//   const response = await res.json();
+
+//   return {
+//     props: {
+//       product: response.data,
+//     },
+
+//     revalidate: 10,
+//   };
+// }
+
+// --- ALTERNATIF: SERVER SIDE RENDERING (SSR) ---
+
+export async function getServerSideProps({ params }: { params: { id: string } }) {
   const res = await fetch(`http://localhost:3001/api/produk/${params.id}`);
   const response = await res.json();
 
@@ -47,21 +62,5 @@ export async function getStaticProps({
     props: {
       product: response.data,
     },
-
-    revalidate: 10,
   };
 }
-
-// --- ALTERNATIF: SERVER SIDE RENDERING (SSR) ---
-/* 
-export async function getServerSideProps({ params }: { params: { id: string } }) {
-  const res = await fetch(`http://localhost:3000/api/produk/${params.id}`);
-  const response = await res.json();
-
-  return {
-    props: {
-      product: response.data,
-    },
-  };
-}
-*/
